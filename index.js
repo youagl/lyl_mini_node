@@ -71,6 +71,8 @@ http.createServer((req,res)=>{
             console.log(contentType);
             if(contentType === 'application/json'){
                 let postData = '';
+                // 二进制流方式传输，直到流传输结束
+                // chunk是原始二进制数据，需要转化成字符串
                 req.on('data',chunk => {
                     postData += chunk.toString();
                     writeDb(chunk);
@@ -83,8 +85,8 @@ http.createServer((req,res)=>{
                 form.parse(req,(err,fields,files)=>{
                     res.end(JSON.stringify({fields:fields,files:files}))
                 })
-                return;
             }
+            return;
         }
     }
 
