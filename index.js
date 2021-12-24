@@ -1,7 +1,7 @@
 // 四个基础功能
 // 路由管理、静态资源托管、HTTP、store
 const http = require('http');//http模块
-const url = require('url');//解析字符串
+const urlAPI = require('url');//解析字符串
 const path = require('path');//处理路径
 const fs = require('fs');//包括读取文件，读写流等
 const qs = require('querystring');//路径处理
@@ -33,7 +33,7 @@ http.createServer((req,res)=>{
     // 获取请求url
     // req.url 接收到的是字符串形式，需解析
     let url = req.url;
-    let pathName = url.parse(url).pathname;
+    let pathName = urlAPI.parse(url).pathname;
 
     //处理http GET/POST
     //  GET   /api?a=1&b=2
@@ -41,7 +41,7 @@ http.createServer((req,res)=>{
         // 获取请求的method
         const method = req.method;
         if(method === 'GET'){
-            const query = qs.parse(url.parse(url).query) //a=1&b=2 => { a: '1', b: '2' }
+            const query = qs.parse(urlAPI.parse(url).query) //a=1&b=2 => { a: '1', b: '2' }
             console.log(query);
             const reqData = {
                 code:200,
